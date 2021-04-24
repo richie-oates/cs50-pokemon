@@ -25,7 +25,8 @@ function PlayerWalkState:checkForEncounter()
     local x, y = self.entity.mapX, self.entity.mapY
 
     -- chance to go to battle if we're walking into a grass tile, else move as normal
-    if self.level.grassLayer.tiles[y][x].id == TILE_IDS['tall-grass'] and math.random(10) == 1 then
+    -- Assignment- for testing automatically trigger encounter and therefore a fight by holding f key when walking through long grass
+    if self.level.grassLayer.tiles[y][x].id == TILE_IDS['tall-grass'] and (math.random(10) == 1 or love.keyboard.isDown('f')) then
         self.entity:changeState('idle')
 
         -- trigger music changes
