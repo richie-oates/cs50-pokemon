@@ -27,7 +27,7 @@ function LevelUpMenuState:init(levelUpValues, playerPokemon, onClose)
 
     self.onClose = onClose or function() end
 
-    self.levelUpMenu1 = Menu {
+    self.levelUpMenu = Menu {
         x = 0,
         y = 0,
         width = VIRTUAL_WIDTH,
