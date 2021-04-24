@@ -25,33 +25,41 @@ function Selection:init(def)
     self.gapHeight = self.height / #self.items
 
     self.currentSelection = 1
+
+    -- Assignment: Make a boolean to define if the menu items are selectable
+    self.selectable = def.selectable
+
+    if self.selectable == nil then
+        self.selectable = true
+    end
 end
 
 function Selection:update(dt)
-    if love.keyboard.wasPressed('up') then
-        if self.currentSelection == 1 then
-            self.currentSelection = #self.items
-        else
-            self.currentSelection = self.currentSelection - 1
-        end
-        
-        gSounds['blip']:stop()
-        gSounds['blip']:play()
-    elseif love.keyboard.wasPressed('down') then
-        if self.currentSelection == #self.items then
-            self.currentSelection = 1
-        else
-            self.currentSelection = self.currentSelection + 1
-        end
-        
-        gSounds['blip']:stop()
-        gSounds['blip']:play()
-    elseif love.keyboard.wasPressed('return') or love.keyboard.wasPressed('enter') then
+    if love.keyboard.wasPressed('return') or love.keyboard.wasPressed('enter') then
         self.items[self.currentSelection].onSelect()
-        
+        self:selectionSound()
+    elseif self.selectable then
+        if  love.keyboard.wasPressed('up') then
+            if self.currentSelection == 1 then
+                self.currentSelection = #self.items
+            else
+                self.currentSelection = self.currentSelection - 1
+            end
+            self:selectionSound()
+        elseif love.keyboard.wasPressed('down') then
+            if self.currentSelection == #self.items then
+                self.currentSelection = 1
+            else
+                self.currentSelection = self.currentSelection + 1
+            end
+            self:selectionSound()
+        end
+    end
+end
+
+function Selection:selectionSound()
         gSounds['blip']:stop()
         gSounds['blip']:play()
-    end
 end
 
 function Selection:render()
@@ -61,7 +69,7 @@ function Selection:render()
         local paddedY = currentY + (self.gapHeight / 2) - self.font:getHeight() / 2
 
         -- draw selection marker if we're at the right index
-        if i == self.currentSelection then
+        if i == self.currentSelection and self.selectable then
             love.graphics.draw(gTextures['cursor'], self.x - 8, paddedY)
         end
 

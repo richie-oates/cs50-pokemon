@@ -31,6 +31,8 @@ function Pokemon:init(def, level)
 
     self.level = level
     self.currentExp = 0
+    -- Assignment: give us enough exp to level up on first fight
+    self.currentExp = self.level * self.level * 5 * 0.74
     self.expToLevel = self.level * self.level * 5 * 0.75
 
     self:calculateStats()
