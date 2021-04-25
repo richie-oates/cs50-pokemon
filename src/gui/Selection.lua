@@ -35,7 +35,7 @@ function Selection:init(def)
 end
 
 function Selection:update(dt)
-    -- Assignment: Changed the order her for the conditions so we can still use the onSelect() function if the menu is not selectable.
+    -- Assignment: Changed the order here for the conditions so we can still use the onSelect() function if the menu is not selectable.
     if love.keyboard.wasPressed('return') or love.keyboard.wasPressed('enter') then
         self.items[self.currentSelection].onSelect()
         self:selectionSound()
