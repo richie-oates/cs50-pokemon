@@ -28,13 +28,14 @@ function Selection:init(def)
 
     -- Assignment: Make a boolean to define if the menu items are selectable
     self.selectable = def.selectable
-
+    -- Default to true if no value is passed fopr selectable
     if self.selectable == nil then
         self.selectable = true
     end
 end
 
 function Selection:update(dt)
+    -- Assignment: Changed the order her for the conditions so we can still use the onSelect() function if the menu is not selectable.
     if love.keyboard.wasPressed('return') or love.keyboard.wasPressed('enter') then
         self.items[self.currentSelection].onSelect()
         self:selectionSound()
@@ -68,7 +69,7 @@ function Selection:render()
     for i = 1, #self.items do
         local paddedY = currentY + (self.gapHeight / 2) - self.font:getHeight() / 2
 
-        -- draw selection marker if we're at the right index
+        -- draw selection marker if we're at the right index and menu is selectable
         if i == self.currentSelection and self.selectable then
             love.graphics.draw(gTextures['cursor'], self.x - 8, paddedY)
         end
